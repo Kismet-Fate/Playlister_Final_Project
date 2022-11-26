@@ -30,6 +30,11 @@ getLoggedIn = async (req, res) => {
     }
 }
 
+guestExist = async () => {
+    const existingUser = User.findOne("Guest@gmail.com");
+    return existingUser;
+}
+
 loginUser = async (req, res) => {
     console.log("loginUser");
     try {
@@ -159,6 +164,7 @@ registerUser = async (req, res) => {
         })
 
         console.log("token sent");
+        return 1;
 
     } catch (err) {
         console.error(err);

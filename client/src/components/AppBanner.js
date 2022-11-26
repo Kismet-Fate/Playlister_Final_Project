@@ -37,6 +37,25 @@ export default function AppBanner() {
         store.closeCurrentList();
     }
 
+    const handleGuest = () => {
+        const t = auth.registerUser(
+            "Guest",
+            " ",
+            "Guest@gmail.com",
+            "GuestGuestGuest",
+            "GuestGuestGuest"
+        );
+        console.log(t);
+        console.log(" thing");
+        if(t != 1){
+            auth.loginUser(
+                "Guest@gmail.com",
+                "GuestGuestGuest"
+            );
+        }
+        setAnchorEl(null);
+    };
+
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
         <Menu
@@ -56,6 +75,7 @@ export default function AppBanner() {
         >
             <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
             <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
+            <MenuItem onClick={handleGuest}><Link to='/'>Login As Guest</Link></MenuItem>
         </Menu>
     );
     const loggedInMenu = 
