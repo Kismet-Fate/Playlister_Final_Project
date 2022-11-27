@@ -120,6 +120,19 @@ getPlaylistById = async (req, res) => {
         asyncFindUser(list);
     }).catch(err => console.log(err))
 }
+getAllPlayLists = async (req, res) => {
+    let pairs = [];
+                    for (let key in playlists) {
+                        let list = playlists[key];
+                        let pair = {
+                            _id: list._id,
+                            name: list.name
+                        };
+                        pairs.push(pair);
+                    }
+                    return res.status(200).json({ success: true, idNamePairs: pairs })
+}
+
 getPlaylistPairs = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({

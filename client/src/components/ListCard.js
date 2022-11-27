@@ -73,6 +73,7 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
+    console.log(idNamePair);
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -84,7 +85,9 @@ function ListCard(props) {
                 handleLoadList(event, idNamePair._id)
             }}
         >
+            
             <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
+            <Box sx={{ p: 1, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> 
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{fontSize:'48pt'}} />

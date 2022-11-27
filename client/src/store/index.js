@@ -45,10 +45,17 @@ const CurrentModal = {
     ERROR : "ERROR"
 }
 
+const CurrentState = {
+    HOME : "HOME",
+
+    ACCOUNT : "ACCOUNT",
+}
+
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
 function GlobalStoreContextProvider(props) {
     // THESE ARE ALL THE THINGS OUR DATA STORE WILL MANAGE
+
     const [store, setStore] = useState({
         currentModal : CurrentModal.NONE,
         idNamePairs: [],
@@ -283,7 +290,8 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
-        const response = await api.createPlaylist(newListName, [], auth.user.email);
+        console.log(auth.user);
+        const response = await api.createPlaylist(newListName, [], auth.user.email, [auth.user.firstName,  auth.user.lastName]);
         console.log("createNewList response: " + response);
         if (response.status === 201) {
             tps.clearAllTransactions();
@@ -305,7 +313,11 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
-            const response = await api.getPlaylistPairs();
+            //const response = await api.getPlaylistPairs();
+            
+            const response = await api.getPlaylists();
+            //console.log(response);
+            /*
             if (response.data.success) {
                 let pairsArray = response.data.idNamePairs;
                 console.log(pairsArray);
@@ -314,6 +326,16 @@ function GlobalStoreContextProvider(props) {
                     payload: pairsArray
                 });
             }
+            */
+            if(response.data.success) {
+                console.log(response.data.data);
+                let pairsArray = [];
+                response.data.data.map(element => pairsArray.push({_id : element._id, name : element.name, author : element.ownerEmail, firstname : element.firstname, lastname : element.lastname}));
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: pairsArray
+                });
+           }
             else {
                 console.log("API FAILED TO GET THE LIST PAIRS");
             }
