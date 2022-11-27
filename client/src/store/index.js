@@ -242,7 +242,15 @@ function GlobalStoreContextProvider(props) {
 
 
 
-    store.updateListLikes = function (id) {
+    store.updateListLikes = function (id, playlist) {
+        let playlists = api.getPlaylists();
+        playlist.slice(0);
+        console.log("????")
+        console.log(id);
+        console.log(playlist);
+        api.updatePlaylistById(id, playlist);
+        
+        /*
         async function asyncChangeListName(id) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
@@ -272,6 +280,7 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncChangeListName(id);
+        */
     }
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
@@ -363,11 +372,14 @@ function GlobalStoreContextProvider(props) {
             */
             if(response.data.success) {
                 console.log(response.data.data);
-                let pairsArray = [];
+                let pairsArray = response.data.data;
+                //let pairsArray = [];
+                /*
                 response.data.data.map(element => pairsArray.push({_id : element._id,
                      name : element.name, author : element.ownerEmail, firstname : element.firstname,
                       lastname : element.lastname, listens : element.listens, likes : element.likes,
                        dislikes : element.dislikes}));
+                       */
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: pairsArray

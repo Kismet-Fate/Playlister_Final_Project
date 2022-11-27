@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
-
+import {Button} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
@@ -14,7 +14,7 @@ import Box from '@mui/material/Box'
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-
+    var vidPlayer = false;
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
@@ -35,15 +35,15 @@ const HomeScreen = () => {
                     />
                 ))
                 
+                
             }
-            <Fab sx={{transform:"translate(1150%, 10%)"}}
-                color="primary" 
-                aria-label="add"
+            <Button sx = {{width: '100%', height : '5%'}} color="primary" variant="contained" aria-label="add"
                 id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
+                onClick={handleCreateNewList}>
+            +
+          </Button>
+          
+            
             </List>;
     }
     return (
