@@ -17,6 +17,10 @@ const playlistSchema = new Schema(
         }], required: true },
         firstname: {type:String, required: false},
         lastname: {type:String, required: false},
+        published: {type:Boolean, required: false},
+        listens : {type:Number, required: false},
+        likes : {type:Number, required: false},
+        dislikes : {type:Number, required: false},
     },
     { timestamps: true },
 )

@@ -6,7 +6,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
-
+import { Button } from '@mui/material';
+import api from '../store/store-request-api'
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -19,6 +20,8 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
+    
+    let expanded = false;
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -64,6 +67,29 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
+    
+    function handleExpand(event, id){
+        event.stopPropagation();
+        console.log(expanded);
+        if(!expanded) expanded = true;
+        else expanded = false;
+        //store.hideModals();
+    }
+
+    function handleLike(event, id){
+        //console.log(store.currentSong);
+        event.stopPropagation();
+        idNamePair.likes++;
+        //store.updateListLikes(id);
+        store.hideModals();
+        //store.closeCurrentList(id);
+    }
+    function handleDislike(event, id){
+        event.stopPropagation();
+        idNamePair.dislikes++;
+        store.hideModals();
+    }
+
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -79,15 +105,17 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', p: 1 }}
-            style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }}
+            style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }} // change this later for text things when I add the video player
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
             
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> 
+            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.name}</Box>
+            <Box sx={{ p: 2, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
+            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>listens </Box> <Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.listens}</Box> </Box>
+            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{p: 1, flexGrow: 1}}><Button onClick ={(event) => {handleLike(event, idNamePair._id)}}>👍</Button>{idNamePair.likes}</Box><Box sx={{p: 1, flexGrow: 1}}><Button onClick = {(event) => {handleDislike(event, idNamePair._id)}}>👎</Button>{idNamePair.dislikes}</Box></Box> 
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{fontSize:'48pt'}} />
@@ -100,7 +128,16 @@ function ListCard(props) {
                     <DeleteIcon style={{fontSize:'48pt'}} />
                 </IconButton>
             </Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleExpand(event, idNamePair._id)
+                    }} aria-label='expand'>
+                    ⇓
+                </IconButton>
+            </Box>
         </ListItem>
+        
+    if(expanded) console.log("urmom")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
 
     if (editActive) {
         cardElement =

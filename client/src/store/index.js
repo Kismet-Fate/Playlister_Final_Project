@@ -47,8 +47,8 @@ const CurrentModal = {
 
 const CurrentState = {
     HOME : "HOME",
-
-    ACCOUNT : "ACCOUNT",
+    ALL : "ALL",
+    USER : "USER",
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -239,6 +239,40 @@ function GlobalStoreContextProvider(props) {
         history.push("/playlist/635f203d2e072037af2e6284");
     }
 
+
+
+
+    store.updateListLikes = function (id) {
+        async function asyncChangeListName(id) {
+            let response = await api.getPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.likes = playlist.likes+1;
+                async function updateList(playlist) {
+                    response = await api.updatePlaylistById(playlist._id, playlist);
+                    if (response.data.success) {
+                        async function getListPairs(playlist) {
+                            response = await api.getPlaylistPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                    payload: {
+                                        idNamePairs: pairsArray,
+                                        playlist: playlist
+                                    }
+                                });
+                                store.setCurrentList(id);
+                            }
+                        }
+                        getListPairs(playlist);
+                    }
+                }
+                updateList(playlist);
+            }
+        }
+        asyncChangeListName(id);
+    }
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
@@ -291,7 +325,7 @@ function GlobalStoreContextProvider(props) {
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
         console.log(auth.user);
-        const response = await api.createPlaylist(newListName, [], auth.user.email, [auth.user.firstName,  auth.user.lastName]);
+        const response = await api.createPlaylist(newListName, [], auth.user.email, [auth.user.firstName,  auth.user.lastName], false);
         console.log("createNewList response: " + response);
         if (response.status === 201) {
             tps.clearAllTransactions();
@@ -330,7 +364,10 @@ function GlobalStoreContextProvider(props) {
             if(response.data.success) {
                 console.log(response.data.data);
                 let pairsArray = [];
-                response.data.data.map(element => pairsArray.push({_id : element._id, name : element.name, author : element.ownerEmail, firstname : element.firstname, lastname : element.lastname}));
+                response.data.data.map(element => pairsArray.push({_id : element._id,
+                     name : element.name, author : element.ownerEmail, firstname : element.firstname,
+                      lastname : element.lastname, listens : element.listens, likes : element.likes,
+                       dislikes : element.dislikes}));
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: pairsArray
