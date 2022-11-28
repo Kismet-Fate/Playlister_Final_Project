@@ -50,7 +50,9 @@ createPlaylist = (req, res) => {
             });
     })
 }
+
 deletePlaylist = async (req, res) => {
+    
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
             errorMessage: 'UNAUTHORIZED'
@@ -87,7 +89,9 @@ deletePlaylist = async (req, res) => {
         }
         asyncFindUser(playlist);
     })
+    
 }
+
 getPlaylistById = async (req, res) => {
     if(auth.verifyUser(req) === null){
         return res.status(400).json({
@@ -229,6 +233,13 @@ updatePlaylist = async (req, res) => {
 
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
+                    list.comments = body.playlist.comments;
+                    list.firstname = body.playlist.firstname;
+                    list.lastname = body.playlist.lastname;
+                    list.listens = body.playlist.listens;
+                    list.likes = body.playlist.likes;
+                    list.dislikes = body.playlist.dislikes;
+                    list.published = body.playlist.published;
                     list
                         .save()
                         .then(() => {

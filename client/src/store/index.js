@@ -244,7 +244,6 @@ function GlobalStoreContextProvider(props) {
 
     store.updateListLikes = function (id, playlist) {
         let playlists = api.getPlaylists();
-        playlist.slice(0);
         console.log("????")
         console.log(id);
         console.log(playlist);

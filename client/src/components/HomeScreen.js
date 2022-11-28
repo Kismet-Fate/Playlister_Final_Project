@@ -6,7 +6,8 @@ import {Button} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -14,7 +15,7 @@ import Box from '@mui/material/Box'
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-    var vidPlayer = false;
+    var vidPlayer = true;
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
@@ -46,26 +47,65 @@ const HomeScreen = () => {
             
             </List>;
     }
-    return (
-        <div id="playlist-selector">
-            <div id="list-selector-heading">
-            <Fab sx={{transform:"translate(-20%, 0%)"}}
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                Your Playlists
-            </div>
-            <Box sx={{bgcolor:"background.paper"}} id="list-selector-list">
-                {
-                    listCard
-                }
-                <MUIDeleteModal />
-            </Box>
-        </div>)
+    if(!vidPlayer){
+        return (
+            
+            <div id="playlist-selector">
+                <div id="list-selector-heading">
+                <Fab sx={{transform:"translate(-20%, 0%)"}}
+                    color="primary" 
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                >
+                    <AddIcon />
+                </Fab>
+                    Your Playlists
+                </div>
+                <Box sx={{bgcolor:"background.paper"}} id="list-selector-list">
+                    {
+                        listCard
+                    }
+                    <MUIDeleteModal />
+                </Box>
+            </div>)
+    } else{
+        return (
+            
+            <div id="playlist-selector">
+                <div id="list-selector-heading">
+                <Fab sx={{transform:"translate(-20%, 0%)"}}
+                    color="primary" 
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                >
+                    <AddIcon />
+                </Fab>
+                    Your Playlists
+                </div>
+                
+                <div className="splitScreen">
+                    <div className="leftPanel">
+
+                        <Box sx={{width:"50%", bgcolor:"background.paper"}} id="list-selector-list">
+                            {
+                                listCard
+                            }
+                            <MUIDeleteModal />
+                        </Box>
+                    </div>
+                    <div className="rightPanel">
+
+
+                    </div>
+                </div>
+                
+                
+                
+                
+            </div>)
+    }
 }
 
 export default HomeScreen;

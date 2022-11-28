@@ -21,7 +21,7 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
     
-    let expanded = false;
+    const [expanded, setExpanded] = useState(false);
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -71,8 +71,8 @@ function ListCard(props) {
     function handleExpand(event, id){
         event.stopPropagation();
         console.log(expanded);
-        if(!expanded) expanded = true;
-        else expanded = false;
+        if(!expanded) setExpanded(true);
+        else setExpanded(false);
         //store.hideModals();
     }
 
@@ -80,13 +80,21 @@ function ListCard(props) {
         //console.log(store.currentSong);
         event.stopPropagation();
         idNamePair.likes++;
-        //store.updateListLikes(id);
+        store.updateListLikes(id, idNamePair);
         store.hideModals();
         //store.closeCurrentList(id);
     }
     function handleDislike(event, id){
         event.stopPropagation();
         idNamePair.dislikes++;
+        store.updateListLikes(id, idNamePair);
+        store.hideModals();
+        
+    }
+    function handleListen(event, id){
+        event.stopPropagation();
+        idNamePair.listens++;
+        store.updateListLikes(id, idNamePair);
         store.hideModals();
     }
 
@@ -100,6 +108,9 @@ function ListCard(props) {
         cardStatus = true;
     }
     console.log(idNamePair);
+    /*
+    Change overflow to overflow-y, change left panel width to 70%, no position absolute. 
+    */
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -135,9 +146,10 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
+            
         </ListItem>
         
-    if(expanded) console.log("urmom")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
+    if(expanded) console.log("thing")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
 
     if (editActive) {
         cardElement =

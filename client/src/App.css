@@ -16,6 +16,24 @@
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 }
 
+.splitScreen {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+.rightPanel {
+  grid-column: 1;
+  grid-row: 1;
+}
+.leftPanel {
+  width:50%;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+
+
 body {
   /*background-image: url('https://thumbs.dreamstime.com/b/music-notes-symbols-seamless-pattern-design-fully-editable-fill-background-color-music-notes-symbols-seamless-pattern-118273669.jpg')
   background-image: linear-gradient(to bottom, #b8b808, #636723);
