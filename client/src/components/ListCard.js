@@ -22,8 +22,8 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
 
-    const [expanded, setExpanded] = useState(false);
 
+    const [expanded, setExpanded] = useState(false);
     //const [liked,setLiked] = useState(false)
     const [liked, setLiked] = useState(
         localStorage.getItem('liked') === 'true'
@@ -36,12 +36,34 @@ function ListCard(props) {
         localStorage.setItem('disliked', JSON.stringify(disliked));
     }, [liked, disliked]);
 
-    
-    /*
+   
     useEffect(() => {
-        
-    }, [disliked]);
-    */
+        var t = document.getElementById(idNamePair._id);
+        var h = t.style.height 
+        var a = t.style.alignSelf 
+        if(expanded){
+            t = document.getElementById(idNamePair._id);
+            t.style.height = "100%";
+            t.style.top = "0";
+            t.style.alignItems = "initial";
+            
+        }
+        else {
+            t.style.height = "30%";
+            t.style.alignSelf = a;
+            t.style.alignItems = "center";
+
+            
+        }
+        /*
+        if(expanded){
+            
+        }else{
+
+        }*/
+        //setExpanded(!expanded);
+    }, [expanded]);
+    
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
@@ -90,9 +112,9 @@ function ListCard(props) {
     function handleExpand(event, id) {
         event.stopPropagation();
         console.log(expanded);
-        if (!expanded) setExpanded(true);
-        else setExpanded(false);
-        //store.hideModals();
+        setExpanded(!expanded);
+        
+        store.hideModals();
     }
 
     function handleLike(event, id) {
@@ -183,9 +205,15 @@ function ListCard(props) {
             </Box>
 
         </ListItem>
-
-    if (expanded) console.log("thing")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
-
+/*
+    if (expanded) {
+        console.log("thing")//
+        //cardElement += <Box sx={{ p: 1 }}>thing</Box>
+        var t = document.getElementById(idNamePair._id);
+        t.style.height = "700px";
+        t.style.alignSelf = "top";
+    }
+*/
     if (editActive) {
         cardElement =
             <TextField
