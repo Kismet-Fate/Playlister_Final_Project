@@ -28,17 +28,20 @@ function ListCard(props) {
     const [liked, setLiked] = useState(
         localStorage.getItem('liked') === 'true'
     );
+    const [disliked, setdisLiked] = useState(
+        localStorage.getItem('disliked') === 'true'
+    );
     useEffect(() => {
         localStorage.setItem('liked', JSON.stringify(liked));
-    }, [liked]);
-
-    const [disliked,setdisLiked] = useState(
-        localStorage.getItem('disliked') === 'true'
-      );
-    useEffect(() => {
         localStorage.setItem('disliked', JSON.stringify(disliked));
-      }, [disliked]);
+    }, [liked, disliked]);
 
+    
+    /*
+    useEffect(() => {
+        
+    }, [disliked]);
+    */
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
@@ -110,10 +113,10 @@ function ListCard(props) {
     }
     function handleDislike(event, id) {
         event.stopPropagation();
-        
+
         if (!disliked) {
             idNamePair.dislikes++;
-            setdisLiked(!liked);
+            setdisLiked(!disliked);
         }
         else {
             idNamePair.dislikes--;
