@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import api from '../store/store-request-api'
+
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -20,8 +21,23 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
-    
+
     const [expanded, setExpanded] = useState(false);
+
+    //const [liked,setLiked] = useState(false)
+    const [liked, setLiked] = useState(
+        localStorage.getItem('liked') === 'true'
+    );
+    useEffect(() => {
+        localStorage.setItem('liked', JSON.stringify(liked));
+    }, [liked]);
+
+    const [disliked,setdisLiked] = useState(
+        localStorage.getItem('disliked') === 'true'
+      );
+    useEffect(() => {
+        localStorage.setItem('disliked', JSON.stringify(disliked));
+      }, [disliked]);
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -67,31 +83,47 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
-    
-    function handleExpand(event, id){
+
+    function handleExpand(event, id) {
         event.stopPropagation();
         console.log(expanded);
-        if(!expanded) setExpanded(true);
+        if (!expanded) setExpanded(true);
         else setExpanded(false);
         //store.hideModals();
     }
 
-    function handleLike(event, id){
+    function handleLike(event, id) {
         //console.log(store.currentSong);
+
         event.stopPropagation();
-        idNamePair.likes++;
+        if (!liked) {
+            idNamePair.likes++;
+            setLiked(!liked);
+        }
+        else {
+            idNamePair.likes--;
+            setLiked(!liked);
+        }
         store.updateListLikes(id, idNamePair);
         store.hideModals();
         //store.closeCurrentList(id);
     }
-    function handleDislike(event, id){
+    function handleDislike(event, id) {
         event.stopPropagation();
-        idNamePair.dislikes++;
+        
+        if (!disliked) {
+            idNamePair.dislikes++;
+            setdisLiked(!liked);
+        }
+        else {
+            idNamePair.dislikes--;
+            setdisLiked(!disliked);
+        }
         store.updateListLikes(id, idNamePair);
         store.hideModals();
-        
+
     }
-    function handleListen(event, id){
+    function handleListen(event, id) {
         event.stopPropagation();
         idNamePair.listens++;
         store.updateListLikes(id, idNamePair);
@@ -115,41 +147,41 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', p: 1 }}
-            style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }} // change this later for text things when I add the video player
+            sx={{ borderRadius: "25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', p: 1 }}
+            style={{ transform: "translate(1%,0%)", width: '98%', fontSize: '48pt' }} // change this later for text things when I add the video player
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
-            
+
             <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 2, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
+                <Box sx={{ p: 2, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
             <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>listens </Box> <Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.listens}</Box> </Box>
-            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{p: 1, flexGrow: 1}}><Button onClick ={(event) => {handleLike(event, idNamePair._id)}}>👍</Button>{idNamePair.likes}</Box><Box sx={{p: 1, flexGrow: 1}}><Button onClick = {(event) => {handleDislike(event, idNamePair._id)}}>👎</Button>{idNamePair.dislikes}</Box></Box> 
+            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 1, flexGrow: 1 }}><Button onClick={(event) => { handleLike(event, idNamePair._id) }}>👍</Button>{idNamePair.likes}</Box><Box sx={{ p: 1, flexGrow: 1 }}><Button onClick={(event) => { handleDislike(event, idNamePair._id) }}>👎</Button>{idNamePair.dislikes}</Box></Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
+                    <EditIcon style={{ fontSize: '48pt' }} />
                 </IconButton>
             </Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
+                    handleDeleteList(event, idNamePair._id)
+                }} aria-label='delete'>
+                    <DeleteIcon style={{ fontSize: '48pt' }} />
                 </IconButton>
             </Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
-                        handleExpand(event, idNamePair._id)
-                    }} aria-label='expand'>
+                    handleExpand(event, idNamePair._id)
+                }} aria-label='expand'>
                     ⇓
                 </IconButton>
             </Box>
-            
+
         </ListItem>
-        
-    if(expanded) console.log("thing")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
+
+    if (expanded) console.log("thing")//cardElement += <Box sx={{ p: 1 }}>thing</Box>
 
     if (editActive) {
         cardElement =
@@ -165,8 +197,8 @@ function ListCard(props) {
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
                 defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
+                inputProps={{ style: { fontSize: 48 } }}
+                InputLabelProps={{ style: { fontSize: 24 } }}
                 autoFocus
             />
     }

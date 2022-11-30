@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
-
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -26,7 +26,7 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
-
+        localStorage.clear();
     };
 
     let modalJSX = "";
