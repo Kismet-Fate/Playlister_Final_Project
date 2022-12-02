@@ -23,11 +23,17 @@
   grid-template-rows: 1fr;
 }
 .rightPanel {
-  grid-column: 1;
+  display:flex;
+  justify-content: center;
+/*
+  align-items: center;*/
+
+  grid-column: 2;
   grid-row: 1;
 }
 .leftPanel {
-  width:50%;
+  overflow: hidden;
+  width:100%;
   grid-column: 1;
   grid-row: 1;
 }
@@ -184,7 +190,9 @@ body {
 }
 
 #list-selector-list {
-  position: absolute;
+  /*delete position to get split screen
+  position: absolute;*/
+  
   left: 0%;
   top: 10%;
   width: 100%;

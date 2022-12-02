@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import api from '../store/store-request-api'
+import SongCard from './SongCard';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -203,17 +204,15 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
-
+                {expanded && <h1>this is where the songs are supposed to go</h1>/*SongCard*/}
         </ListItem>
-/*
+
     if (expanded) {
         console.log("thing")//
         //cardElement += <Box sx={{ p: 1 }}>thing</Box>
-        var t = document.getElementById(idNamePair._id);
-        t.style.height = "700px";
-        t.style.alignSelf = "top";
+        
     }
-*/
+
     if (editActive) {
         cardElement =
             <TextField

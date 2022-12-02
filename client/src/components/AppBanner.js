@@ -125,7 +125,9 @@ export default function AppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link onClick={handleHouseClick} style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                        <Link onClick={handleHouseClick} style={{ textDecoration: 'none', color: 'white' }} to='/'>
+                            <img src="https://i.ibb.co/4m99V9M/465b24ef5c9adb4ba9518d27ead4c810.png" width="250" height="80" alt="new"/>
+                        </Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ height: "90px", display: { xs: 'none', md: 'flex' } }}>
@@ -142,8 +144,11 @@ export default function AppBanner() {
                         </IconButton>
                     </Box>
                 </Toolbar>
+                
             </AppBar>
+            
             {
+                
                 menu
             }
         </Box>
