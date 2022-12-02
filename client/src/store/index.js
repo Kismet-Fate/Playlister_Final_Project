@@ -480,6 +480,24 @@ function GlobalStoreContextProvider(props) {
         }
         asyncSetCurrentList(id);
     }
+    store.setCurrentList2 = function (id) {
+        async function asyncSetCurrentList(id) {
+            let response = await api.getPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+
+                response = await api.updatePlaylistById(playlist._id, playlist);
+                if (response.data.success) {
+                    storeReducer({
+                        type: GlobalStoreActionType.SET_CURRENT_LIST,
+                        payload: playlist
+                    });
+                    //history.push("/playlist/" + playlist._id);
+                }
+            }
+        }
+        asyncSetCurrentList(id);
+    }
 
     store.getPlaylistSize = function() {
         return store.currentList.songs.length;

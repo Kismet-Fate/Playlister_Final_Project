@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import { fontSize } from '@mui/system';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import YouTubePlayerExample from './PlaylisterYouTubePlayer.js';
+
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -169,8 +171,7 @@ const HomeScreen = () => {
                         </Box>
                     </div>
                     <div className="rightPanel">
-                        <h1>where the vid player goes</h1>
-
+                        <YouTubePlayerExample />
                     </div>
                 </div>
 

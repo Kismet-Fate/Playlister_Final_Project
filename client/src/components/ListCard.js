@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import api from '../store/store-request-api'
 import SongCard from './SongCard';
+import WorkspaceScreen from './WorkspaceScreen.js';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -114,7 +115,18 @@ function ListCard(props) {
         event.stopPropagation();
         console.log(expanded);
         setExpanded(!expanded);
-        
+
+        if (!event.target.disabled) {
+            let _id = event.target.id;
+            if (_id.indexOf('list-card-text-') >= 0)
+                _id = ("" + _id).substring("list-card-text-".length);
+
+            console.log("load " + event.target.id);
+
+            // CHANGE THE CURRENT LIST
+            store.setCurrentList2(id);
+        }
+
         store.hideModals();
     }
 
@@ -204,7 +216,7 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
-                {expanded && <h1>this is where the songs are supposed to go</h1>/*SongCard*/}
+                {expanded && store.currentList && <WorkspaceScreen />/*SongCard*/}
         </ListItem>
 
     if (expanded) {
