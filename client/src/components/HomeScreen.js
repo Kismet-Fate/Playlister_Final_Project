@@ -42,9 +42,10 @@ const HomeScreen = (props) => {
     }
     const[currentComment, setcurrentComment] = useState();
     useEffect(() => {
-        if(store.currentList != null)
-        setcurrentComment(store.currentList.comments);
-        console.log(currentComment)
+        if(store.currentList != null){
+            setcurrentComment(store.currentList.comments);
+            //console.log(store.isMyList(store.currentList));
+        }
     }, [store.currentList]);
 
 
@@ -204,7 +205,7 @@ const HomeScreen = (props) => {
                     >
                         <AddIcon />
                     </Fab>*/}
-                    Your Playlists
+                    
                 </div>
                 <Grid container spacing = {0}>
                     <div className="splitScreen">
@@ -278,7 +279,7 @@ const HomeScreen = (props) => {
                     >
                         <AddIcon />
                     </Fab>*/}
-                    Your Playlists
+                    
                 </div>
                 <Grid container spacing = {0}>
                     <div className="splitScreen">

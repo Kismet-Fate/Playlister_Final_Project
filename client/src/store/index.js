@@ -412,6 +412,11 @@ function GlobalStoreContextProvider(props) {
        //store.loadIdNamePairs();
     }
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
+    store.isMyList = function (playlist){
+        
+        if(playlist.ownerEmail === auth.user.email)return true;
+        else return false;
+    }
     store.searchIdNamePairsAuthor = function(keyword){
         async function asyncLoadIdNamePairs() {
             const response = await api.getPlaylists();

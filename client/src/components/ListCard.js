@@ -117,7 +117,7 @@ function ListCard(props) {
 
     function handleExpand(event, id) {
         event.stopPropagation();
-        console.log(expanded);
+        //console.log(expanded);
         setExpanded(!expanded);
 
         if (!event.target.disabled) {
@@ -232,12 +232,6 @@ function ListCard(props) {
             </div>
             </Grid>
         </ListItem>
-
-    if (expanded) {
-        console.log("thing")//
-        //cardElement += <Box sx={{ p: 1 }}>thing</Box>
-        
-    }
 
     if (editActive) {
         cardElement =
