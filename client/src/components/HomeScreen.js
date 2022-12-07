@@ -21,12 +21,21 @@ import YouTubePlayerExample from './PlaylisterYouTubePlayer.js';
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const [vidPlayer, setVidPlayer] = useState(true);
-    
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
     useEffect(() => {
+        /*
+        if(store.user = "Home"){
+            document.getElementById("homeButton").src = 'https://safeimagekit.com/ezoimgfmt/d33wubrfki0l68.cloudfront.net/050c51f7b376da9c4aad8dfc1d875558b85d77b8/6115e/img/featureproperty/nodownload.png?ezimgfmt=rs:48x48/rscb1/ng:webp/ngcb1'
+        }
+        else{
+            document.getElementById("homeButton").src = "https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png"
+        }
+        */
         store.loadIdNamePairs();
+        console.log(document.getElementsByClassName("homeButton"));
+        
         console.log(store.user)
     }, [store.user]);
     const [idNamePair2, setidNamePair2] = useState([]);
@@ -55,14 +64,23 @@ const HomeScreen = () => {
 
     function handleHome(){
         store.changeUserStateHome();
+        document.getElementById("homeButton").src = 'https://safeimagekit.com/ezoimgfmt/d33wubrfki0l68.cloudfront.net/050c51f7b376da9c4aad8dfc1d875558b85d77b8/6115e/img/featureproperty/nodownload.png?ezimgfmt=rs:48x48/rscb1/ng:webp/ngcb1';
+        document.getElementById("allButton").src = 'https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png';
+        document.getElementById("userButton").src = 'https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png';
         //console.log(store);
     }
     function handleAll(){   
         store.changeUserStateAll();
+        document.getElementById("homeButton").src = 'https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png';
+        document.getElementById("allButton").src = 'https://safeimagekit.com/ezoimgfmt/d33wubrfki0l68.cloudfront.net/050c51f7b376da9c4aad8dfc1d875558b85d77b8/6115e/img/featureproperty/nodownload.png?ezimgfmt=rs:48x48/rscb1/ng:webp/ngcb1';
+        document.getElementById("userButton").src = 'https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png';
         //console.log(store);
     }
     function handleUser(){
          store.changeUserStateUser();
+         document.getElementById("homeButton").src = 'https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png';
+        document.getElementById("allButton").src = 'https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png';
+        document.getElementById("userButton").src = 'https://safeimagekit.com/ezoimgfmt/d33wubrfki0l68.cloudfront.net/050c51f7b376da9c4aad8dfc1d875558b85d77b8/6115e/img/featureproperty/nodownload.png?ezimgfmt=rs:48x48/rscb1/ng:webp/ngcb1';
         //console.log(store);
         //console.log(store);
         //store.loadIdNamePairs();
@@ -140,9 +158,9 @@ const HomeScreen = () => {
         return (
 
             <div id="playlist-selector">
-                <div><img src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
-                    <img src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
-                    <img src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
+                <div><img id = "homeButton" src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
+                    <img id = "allButton" src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
+                    <img id = "userButton" src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
                     <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
                     <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
                     <p style={{display:"inline", float: "right"}}>Sorted by</p>
@@ -193,9 +211,9 @@ const HomeScreen = () => {
         return (
 
             <div id="playlist-selector">
-                <div><img src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
-                    <img src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
-                    <img src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
+                <div><img id = "homeButton" src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
+                    <img id = "allButton" src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
+                    <img id = "userButton" src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
                     <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
                     <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
                     <p style={{display:"inline", float: "right"}}>Sorted by</p>
