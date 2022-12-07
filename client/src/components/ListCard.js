@@ -169,7 +169,7 @@ function ListCard(props) {
         event.stopPropagation();
         idNamePair.listens++;
         store.updateListLikes(id, idNamePair);
-        store.hideModals();
+        //store.hideModals();
     }
 
 

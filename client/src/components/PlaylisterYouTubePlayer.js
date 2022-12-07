@@ -20,7 +20,7 @@ export default function YouTubePlayerExample({store}) {
             setplaylist(playlist2);
             console.log(playlist);
         }
-    }, [store]);
+    }, [store.currentList]);
     
     
     // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST

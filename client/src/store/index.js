@@ -413,7 +413,7 @@ function GlobalStoreContextProvider(props) {
     }
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.isMyList = function (playlist){
-        
+        console.log(auth)
         if(playlist.ownerEmail === auth.user.email)return true;
         else return false;
     }
