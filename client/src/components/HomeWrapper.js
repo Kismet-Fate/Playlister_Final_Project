@@ -8,7 +8,7 @@ export default function HomeWrapper() {
     console.log("HomeWrapper auth.loggedIn: " + auth.loggedIn);
     
     if (auth.loggedIn)
-        return <HomeScreen />
+        return <HomeScreen auth = {auth}/>
     else
         return <SplashScreen />
 }

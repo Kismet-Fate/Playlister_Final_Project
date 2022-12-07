@@ -78,7 +78,8 @@ function ListCard(props) {
 
             // CHANGE THE CURRENT LIST
             //remember to change it from 2 to "" if you want to edit it
-            store.setCurrentList2(id);
+            if(event.detail == 2)store.setCurrentList(id);
+            else store.setCurrentList2(id)
         }
         
     }
@@ -130,7 +131,7 @@ function ListCard(props) {
             store.setCurrentList2(id);
         }
 
-        store.hideModals();
+        //store.hideModals();
     }
 
     function handleLike(event, id) {
@@ -146,7 +147,7 @@ function ListCard(props) {
             setLiked(!liked);
         }
         store.updateListLikes(id, idNamePair);
-        store.hideModals();
+        //store.hideModals();
         //store.closeCurrentList(id);
     }
     function handleDislike(event, id) {
@@ -161,7 +162,7 @@ function ListCard(props) {
             setdisLiked(!disliked);
         }
         store.updateListLikes(id, idNamePair);
-        store.hideModals();
+        //store.hideModals();
 
     }
     function handleListen(event, id) {
@@ -196,7 +197,7 @@ function ListCard(props) {
             }}
         >
             
-            
+            <Grid container direction="row" alignItems="stretch" justifyContent="space-between" xs = {6} flexShrink = {0}>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.name}</Box>
             <Box sx={{ p: 1, flexGrow: 0 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>listens </Box> <Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.listens}</Box> </Box>
@@ -220,15 +221,16 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
-            
-            
+            <br></br>
+            </Grid>
+            <Grid >
             <div style={{}}>
-                <Box>
+                
                 
                 {expanded && store.currentList && <WorkspaceScreen />/*SongCard*/}
-                </Box>
+                
             </div>
-            
+            </Grid>
         </ListItem>
 
     if (expanded) {

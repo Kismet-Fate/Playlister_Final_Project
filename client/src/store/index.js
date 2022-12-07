@@ -269,7 +269,7 @@ function GlobalStoreContextProvider(props) {
 
     store.updateListLikes = function (id, playlist) {
         let playlists = api.getPlaylists();
-        console.log("????")
+        //console.log("????")
         console.log(id);
         console.log(playlist);
         api.updatePlaylistById(id, playlist);
@@ -419,7 +419,7 @@ function GlobalStoreContextProvider(props) {
                 
                 console.log(response.data.data);
                 console.log()
-                let pairsArray = response.data.data.filter(element => element.firstname.concat(element.lastname).toLowerCase().includes(keyword.toLowerCase()));
+                let pairsArray = response.data.data.filter(element => element.firstname.concat(" ").concat(element.lastname).toLowerCase().includes(keyword.toLowerCase()));
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: pairsArray
@@ -473,7 +473,7 @@ function GlobalStoreContextProvider(props) {
                 let pairsArray = response.data.data;
                 if(store.user == CurrentState.HOME){
                     //console.log(pairsArray);
-                    pairsArray = pairsArray.filter((element => element.firstname.concat(element.lastname).includes(auth.user.firstName.concat(auth.user.lastName))));
+                    pairsArray = pairsArray.filter((element => element.firstname.concat(element.lastname+" ").includes(auth.user.firstName.concat(auth.user.lastName))));
                     //console.log("these nuts")
                     //console.log(auth);
                 }

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
-import { Button } from '@mui/material';
+import { Button, useThemeProps } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
@@ -12,35 +12,60 @@ import { fontSize } from '@mui/system';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import YouTubePlayerExample from './PlaylisterYouTubePlayer.js';
+import EditToolbar from './EditToolbar'
 
 /*
     This React component lists all the top5 lists in the UI.
     
     @author McKilla Gorilla
 */
-const HomeScreen = () => {
+const HomeScreen = (props) => {
     const { store } = useContext(GlobalStoreContext);
     const [vidPlayer, setVidPlayer] = useState(true);
+    const {auth} = props.auth;
+    /*
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
+    */
     useEffect(() => {
-        /*
-        if(store.user = "Home"){
-            document.getElementById("homeButton").src = 'https://safeimagekit.com/ezoimgfmt/d33wubrfki0l68.cloudfront.net/050c51f7b376da9c4aad8dfc1d875558b85d77b8/6115e/img/featureproperty/nodownload.png?ezimgfmt=rs:48x48/rscb1/ng:webp/ngcb1'
-        }
-        else{
-            document.getElementById("homeButton").src = "https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png"
-        }
-        */
         store.loadIdNamePairs();
-        console.log(document.getElementsByClassName("homeButton"));
         
-        console.log(store.user)
     }, [store.user]);
     const [idNamePair2, setidNamePair2] = useState([]);
     //setidNamePair2(store.idNamePairs);
     const [searchInput, setSearchInput] = useState("");
+
+    const [commentThing, setcommentThing] = useState();
+    function handleCommenting(event) {
+        setcommentThing(event.target.value);
+    }
+    const[currentComment, setcurrentComment] = useState();
+    useEffect(() => {
+        if(store.currentList != null)
+        setcurrentComment(store.currentList.comments);
+        console.log(currentComment)
+    }, [store.currentList]);
+
+
+    function handleSubmit(){
+        let newComment = {
+            name: props.auth.user.firstName.concat(props.auth.user.lastName),
+            comment: commentThing
+        };
+        console.log(props.auth.user.firstName.concat(props.auth.user.lastName));
+        store.currentList.comments.push(newComment);
+        //console.log(store.currentList);
+        store.updateListLikes(store.currentList._id, store.currentList);
+        
+        //console.log(store.currentList);
+        store.loadIdNamePairs();
+        //store.setCurrentList2(store.currentList._id);
+        
+    }
+
+    
+
     const handleChange = (event) => {
         setSearchInput(event.target.value);
     };
@@ -89,7 +114,12 @@ const HomeScreen = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
-
+    function changeToVidPlayer(){
+        setVidPlayer(true);
+    }
+    function changeFromVidPlayer(){
+        setVidPlayer(false);
+    }
 
     /*
     const [anchorEl, setAnchorEl] = useState(null);
@@ -152,9 +182,6 @@ const HomeScreen = () => {
             </List>;
     }
     if (!vidPlayer) {
-        if(store.currentList!=null){
-            store.currentList.comments.forEach(c => <div>{c.Grid}</div>)
-        }
         return (
 
             <div id="playlist-selector">
@@ -195,7 +222,28 @@ const HomeScreen = () => {
                         <Grid item xs = {4} >
                         <div className="rightPanel">
                             {
-                                
+                                <div>
+                                    {store.currentList && <Grid container spacing={2}>
+                                        <Grid item xs={6}>
+                                            <Button onClick={changeToVidPlayer}>Player</Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Button onClick={changeFromVidPlayer}>Comments</Button>
+                                        </Grid>
+                                    </Grid>}
+                                    
+                                    <Grid container spacing={1} direction="column">
+                                        <Grid item xs={8}>
+                                            
+                                            {currentComment.map(e => <div>{e.name} : {e.comment}</div>)}
+                                            
+                                        </Grid>
+                                        <Grid item xs ={4}>
+                                        { store.currentList && <input id="commentSection" type="text" defaultValue="" onChange={handleCommenting} />}
+                                        { store.currentList && <Button onClick={handleSubmit}>submit</Button>}
+                                        </Grid>
+                                    </Grid>
+                                </div>
                             } 
                         </div>
                         </Grid>
@@ -247,6 +295,14 @@ const HomeScreen = () => {
                         </Grid>
                         <Grid item xs = {4} >
                         <div className="rightPanel">
+                        {store.currentList && <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <Button onClick={changeToVidPlayer}>Player</Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button onClick={changeFromVidPlayer}>Comments</Button>
+                            </Grid>
+                        </Grid>}
                             <YouTubePlayerExample store={store} />
                         </div>
                         </Grid>
