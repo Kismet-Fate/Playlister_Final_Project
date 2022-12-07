@@ -479,6 +479,7 @@ function GlobalStoreContextProvider(props) {
                 if(store.user == CurrentState.HOME){
                     //console.log(pairsArray);
                     pairsArray = pairsArray.filter((element => element.firstname.concat(element.lastname+" ").includes(auth.user.firstName.concat(auth.user.lastName))));
+                    pairsArray = pairsArray.filter(element=> store.isMyList(element));
                     //console.log("these nuts")
                     //console.log(auth);
                 }
@@ -517,7 +518,8 @@ function GlobalStoreContextProvider(props) {
         }
         asyncLoadIdNamePairs();
     }
-
+    console.log(store);
+    //store.loadIdNamePairs();
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
     // FUNCTIONS ARE markListForDeletion, deleteList, deleteMarkedList,

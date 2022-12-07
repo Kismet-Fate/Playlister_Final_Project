@@ -307,7 +307,24 @@ const HomeScreen = (props) => {
                                 <Button onClick={changeFromVidPlayer}>Comments</Button>
                             </Grid>
                         </Grid>}
-                            <YouTubePlayerExample store={store} />
+                            {store.currentList && <YouTubePlayerExample store={store} />}
+                                
+                            {/*store.currentList && 
+                            <Grid container>
+                                <Grid item xs={3}>
+                                    <Button>⏪︎</Button>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button>⏹︎</Button>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button>⏵︎</Button>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button>⏩︎</Button>
+                                </Grid>
+
+                            </Grid>*/}
                         </div>
                         </Grid>
                     </div>
