@@ -67,6 +67,7 @@ function ListCard(props) {
     }, [expanded]);
     
     function handleLoadList(event, id) {
+        
         console.log("handleLoadList for " + id);
         if (!event.target.disabled) {
             let _id = event.target.id;
@@ -76,8 +77,10 @@ function ListCard(props) {
             console.log("load " + event.target.id);
 
             // CHANGE THE CURRENT LIST
-            store.setCurrentList(id);
+            //remember to change it from 2 to "" if you want to edit it
+            store.setCurrentList2(id);
         }
+        
     }
 
     function handleToggleEdit(event) {
@@ -216,7 +219,9 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
+            <div style={{}}>
                 {expanded && store.currentList && <WorkspaceScreen />/*SongCard*/}
+            </div>
         </ListItem>
 
     if (expanded) {

@@ -1,19 +1,32 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-
-export default function YouTubePlayerExample() {
+import { useContext, useState, useEffect } from 'react'
+export default function YouTubePlayerExample({store}) {
     // THIS EXAMPLE DEMONSTRATES HOW TO DYNAMICALLY MAKE A
     // YOUTUBE PLAYER AND EMBED IT IN YOUR SITE. IT ALSO
     // DEMONSTRATES HOW TO IMPLEMENT A PLAYLIST THAT MOVES
     // FROM ONE SONG TO THE NEXT
-
-    // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
-    let playlist = [
-        "mqmxkGjow1A",
-        "8RbXIMZmVv8",
-        "8UbNbor3OqQ"
+    let playlist3 = [
+        
     ];
-
+    const [playlist, setplaylist] = useState(playlist3);
+    console.log(store);
+    useEffect(() => {
+        if(store.currentList != null){
+            let playlist2 = [];
+            store.currentList.songs.forEach(function(x){
+                playlist2.push(x.youTubeId);
+            });
+            setplaylist(playlist2);
+            console.log(playlist);
+        }
+    }, [store]);
+    
+    
+    // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
+    
+    
+    
     // THIS IS THE INDEX OF THE SONG CURRENTLY IN USE IN THE PLAYLIST
     let currentSong = 0;
 

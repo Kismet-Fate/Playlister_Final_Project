@@ -20,12 +20,17 @@ import YouTubePlayerExample from './PlaylisterYouTubePlayer.js';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-    const [vidPlayer, setVidPlayer] = useState(false);
-
+    const [vidPlayer, setVidPlayer] = useState(true);
+    
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
-
+    useEffect(() => {
+        store.loadIdNamePairs();
+        console.log(store.user)
+    }, [store.user]);
+    const [idNamePair2, setidNamePair2] = useState([]);
+    //setidNamePair2(store.idNamePairs);
     const [searchInput, setSearchInput] = useState("");
     const handleChange = (event) => {
         setSearchInput(event.target.value);
@@ -34,6 +39,7 @@ const HomeScreen = () => {
     useEffect(() => {
         console.log(searchInput);
         store.idNamePair = store.idNamePairs.filter(element => element.name.toLowerCase().includes(searchInput.toLowerCase()));
+
         console.log("Original playlist")
         console.log(store.idNamePairs);
         console.log("Searched by name of playlist")
@@ -42,8 +48,20 @@ const HomeScreen = () => {
         console.log(store.idNamePairs.filter(element => element.firstname.concat(element.lastname).toLowerCase().includes(searchInput.toLowerCase())));
     }, [searchInput]);
 
-
-
+    function handleHome(){
+        store.changeUserStateHome();
+        //console.log(store);
+    }
+    function handleAll(){   
+        store.changeUserStateAll();
+        //console.log(store);
+    }
+    function handleUser(){
+         store.changeUserStateUser();
+        //console.log(store);
+        //console.log(store);
+        //store.loadIdNamePairs();
+    }
 
     function handleCreateNewList() {
         store.createNewList();
@@ -114,9 +132,9 @@ const HomeScreen = () => {
         return (
 
             <div id="playlist-selector">
-                <div><img src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png"></img>
-                    <img src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png"></img>
-                    <img src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png"></img>
+                <div><img src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
+                    <img src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
+                    <img src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
                     <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
                     <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
                     <p style={{display:"inline", float: "right"}}>Sorted by</p>
@@ -171,7 +189,7 @@ const HomeScreen = () => {
                         </Box>
                     </div>
                     <div className="rightPanel">
-                        <YouTubePlayerExample />
+                        <YouTubePlayerExample store={store} />
                     </div>
                 </div>
 

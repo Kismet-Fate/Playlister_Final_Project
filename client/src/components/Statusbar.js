@@ -23,9 +23,12 @@ function Statusbar() {
     if (auth.loggedIn && store.currentList){
         text = store.currentList.name;
     return (
+        <div></div>
+        /*
         <div id="playlister-statusbar">
             {text}
         </div>
+        */
     );
     }
     return null;
