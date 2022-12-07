@@ -80,6 +80,9 @@ const HomeScreen = (props) => {
         else if(store.user === "USER"){
             store.searchIdNamePairsAuthor(searchInput);
         }
+        else if(store.user === "HOME"){
+            store.searchIdNamePairsPlaylistName(searchInput);
+        }
         console.log("Original playlist")
         console.log(store.idNamePairs);
         console.log("Searched by name of playlist")
@@ -173,11 +176,11 @@ const HomeScreen = (props) => {
 
                 }
                 
-                <Button sx={{ width: '100%', height: '5%' }} color="primary" variant="contained" aria-label="add"
+                {store.user === "HOME" &&<Button sx={{ width: '100%', height: '5%' }} color="primary" variant="contained" aria-label="add"
                     id="add-list-button"
                     onClick={handleCreateNewList}>
                     +
-                </Button>
+                </Button>}
 
 
             </List>;
