@@ -101,9 +101,10 @@ export default function AppBanner() {
     let menu = loggedOutMenu;
     if (auth.loggedIn) {
         menu = loggedInMenu;
+        /*
         if (store.currentList) {
             editToolbar = <EditToolbar />;
-        }
+        }*/
     }
     
     function getAccountMenu(loggedIn) {

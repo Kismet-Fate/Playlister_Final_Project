@@ -21,17 +21,20 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
+  
 }
 .rightPanel {
-  display:flex;
+  display:grid;
+  /*
   justify-content: center;
-/*
+
   align-items: center;*/
 
   grid-column: 2;
   grid-row: 1;
 }
 .leftPanel {
+  min-width: 0;
   overflow: hidden;
   width:100%;
   grid-column: 1;

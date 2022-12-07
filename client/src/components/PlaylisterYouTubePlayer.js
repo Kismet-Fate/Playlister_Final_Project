@@ -67,24 +67,24 @@ export default function YouTubePlayerExample({store}) {
         let player = event.target;
         if (playerStatus === -1) {
             // VIDEO UNSTARTED
-            console.log("-1 Video unstarted");
+            //console.log("-1 Video unstarted");
         } else if (playerStatus === 0) {
             // THE VIDEO HAS COMPLETED PLAYING
-            console.log("0 Video ended");
+            //console.log("0 Video ended");
             incSong();
             loadAndPlayCurrentSong(player);
         } else if (playerStatus === 1) {
             // THE VIDEO IS PLAYED
-            console.log("1 Video played");
+            //console.log("1 Video played");
         } else if (playerStatus === 2) {
             // THE VIDEO IS PAUSED
-            console.log("2 Video paused");
+            //console.log("2 Video paused");
         } else if (playerStatus === 3) {
             // THE VIDEO IS BUFFERING
-            console.log("3 Video buffering");
+            //console.log("3 Video buffering");
         } else if (playerStatus === 5) {
             // THE VIDEO HAS BEEN CUED
-            console.log("5 Video cued");
+            //console.log("5 Video cued");
         }
     }
 

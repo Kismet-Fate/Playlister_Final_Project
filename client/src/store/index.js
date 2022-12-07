@@ -412,6 +412,44 @@ function GlobalStoreContextProvider(props) {
        //store.loadIdNamePairs();
     }
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
+    store.searchIdNamePairsAuthor = function(keyword){
+        async function asyncLoadIdNamePairs() {
+            const response = await api.getPlaylists();
+            if(response.data.success) {
+                
+                console.log(response.data.data);
+                console.log()
+                let pairsArray = response.data.data.filter(element => element.firstname.concat(element.lastname).toLowerCase().includes(keyword.toLowerCase()));
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }
+        asyncLoadIdNamePairs();
+    }
+    store.searchIdNamePairsPlaylistName = function(keyword){
+        async function asyncLoadIdNamePairs() {
+            const response = await api.getPlaylists();
+            if(response.data.success) {
+                
+                console.log(response.data.data);
+                console.log()
+                let pairsArray = response.data.data.filter(element => element.name.toLowerCase().includes(keyword.toLowerCase()));
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }
+        asyncLoadIdNamePairs();
+    }
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
             //const response = await api.getPlaylistPairs();

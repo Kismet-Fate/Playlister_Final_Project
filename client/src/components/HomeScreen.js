@@ -38,8 +38,13 @@ const HomeScreen = () => {
 
     useEffect(() => {
         console.log(searchInput);
-        store.idNamePair = store.idNamePairs.filter(element => element.name.toLowerCase().includes(searchInput.toLowerCase()));
-
+        //store.idNamePair = store.idNamePairs.filter(element => element.name.toLowerCase().includes(searchInput.toLowerCase()));
+        if(store.user === "ALL"){
+            store.searchIdNamePairsPlaylistName(searchInput);
+        }
+        else if(store.user === "USER"){
+            store.searchIdNamePairsAuthor(searchInput);
+        }
         console.log("Original playlist")
         console.log(store.idNamePairs);
         console.log("Searched by name of playlist")
@@ -129,6 +134,9 @@ const HomeScreen = () => {
             </List>;
     }
     if (!vidPlayer) {
+        if(store.currentList!=null){
+            store.currentList.comments.forEach(c => <div>{c.Grid}</div>)
+        }
         return (
 
             <div id="playlist-selector">
@@ -143,7 +151,6 @@ const HomeScreen = () => {
                     
                 </div>
                 <div id="list-selector-heading">
-
                     {/*<Fab sx={{ transform: "translate(-20%, 0%)" }}
                         color="primary"
                         aria-label="add"
@@ -152,20 +159,50 @@ const HomeScreen = () => {
                     >
                         <AddIcon />
                     </Fab>*/}
-                    
                     Your Playlists
                 </div>
-                <Box sx={{ bgcolor: "background.paper" }} id="list-selector-list">
-                    {
-                        listCard
-                    }
-                    <MUIDeleteModal />
-                </Box>
+                <Grid container spacing = {0}>
+                    <div className="splitScreen">
+                        <Grid item xs = {12}>
+                        <div style={{ fontSize: "10px" }} className="leftPanel">
+
+                            <Box sx={{ bgcolor: "background.paper" }} id="list-selector-list">
+                                {
+                                    listCard
+                                }
+                                <MUIDeleteModal />
+                            </Box>
+                        </div>
+                        </Grid>
+                        <Grid item xs = {4} >
+                        <div className="rightPanel">
+                            {
+                                
+                            } 
+                        </div>
+                        </Grid>
+                    </div>
+                    
+                </Grid>
+
+
+
+
             </div>)
     } else {
         return (
 
             <div id="playlist-selector">
+                <div><img src="https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png" onClick={(e)=>handleHome(e)}></img>
+                    <img src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
+                    <img src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
+                    <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
+                    <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
+                    <p style={{display:"inline", float: "right"}}>Sorted by</p>
+                    
+                    
+                    
+                </div>
                 <div id="list-selector-heading">
                     {/*<Fab sx={{ transform: "translate(-20%, 0%)" }}
                         color="primary"
@@ -177,21 +214,27 @@ const HomeScreen = () => {
                     </Fab>*/}
                     Your Playlists
                 </div>
+                <Grid container spacing = {0}>
+                    <div className="splitScreen">
+                        <Grid item xs = {12}>
+                        <div style={{ fontSize: "10px" }} className="leftPanel">
 
-                <div className="splitScreen">
-                    <div style={{ fontSize: "10px" }} className="leftPanel">
-
-                        <Box sx={{ bgcolor: "background.paper" }} id="list-selector-list">
-                            {
-                                listCard
-                            }
-                            <MUIDeleteModal />
-                        </Box>
+                            <Box sx={{ bgcolor: "background.paper" }} id="list-selector-list">
+                                {
+                                    listCard
+                                }
+                                <MUIDeleteModal />
+                            </Box>
+                        </div>
+                        </Grid>
+                        <Grid item xs = {4} >
+                        <div className="rightPanel">
+                            <YouTubePlayerExample store={store} />
+                        </div>
+                        </Grid>
                     </div>
-                    <div className="rightPanel">
-                        <YouTubePlayerExample store={store} />
-                    </div>
-                </div>
+                    
+                </Grid>
 
 
 

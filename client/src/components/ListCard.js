@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import api from '../store/store-request-api'
 import SongCard from './SongCard';
 import WorkspaceScreen from './WorkspaceScreen.js';
-
+import Grid from '@mui/material/Grid';
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -185,21 +185,22 @@ function ListCard(props) {
     Change overflow to overflow-y, change left panel width to 70%, no position absolute. 
     */
     let cardElement =
-        <ListItem
+        <ListItem 
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ borderRadius: "25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ transform: "translate(1%,0%)", width: '98%', fontSize: '48pt' }} // change this later for text things when I add the video player
+            style={{ transform: "translate(1%,0%)", width: '98%', fontSize: '12pt' }} // change this later for text things when I add the video player
             button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
-
-            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.name}</Box>
-                <Box sx={{ p: 2, flexGrow: 1 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
-            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 2, flexGrow: 1 }}>listens </Box> <Box sx={{ p: 2, flexGrow: 1 }}>{idNamePair.listens}</Box> </Box>
-            <Box sx={{ p: 2, flexGrow: 1 }}><Box sx={{ p: 1, flexGrow: 1 }}><Button onClick={(event) => { handleLike(event, idNamePair._id) }}>👍</Button>{idNamePair.likes}</Box><Box sx={{ p: 1, flexGrow: 1 }}><Button onClick={(event) => { handleDislike(event, idNamePair._id) }}>👎</Button>{idNamePair.dislikes}</Box></Box>
+            
+            
+            <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.name}</Box>
+            <Box sx={{ p: 1, flexGrow: 0 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
+            <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>listens </Box> <Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.listens}</Box> </Box>
+            <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleLike(event, idNamePair._id) }}>👍</Button>{idNamePair.likes}</Box><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleDislike(event, idNamePair._id) }}>👎</Button>{idNamePair.dislikes}</Box></Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{ fontSize: '48pt' }} />
@@ -219,9 +220,15 @@ function ListCard(props) {
                     ⇓
                 </IconButton>
             </Box>
+            
+            
             <div style={{}}>
+                <Box>
+                
                 {expanded && store.currentList && <WorkspaceScreen />/*SongCard*/}
+                </Box>
             </div>
+            
         </ListItem>
 
     if (expanded) {
