@@ -53,7 +53,7 @@ const HomeScreen = (props) => {
 
     function handleSubmit(){
         let newComment = {
-            name: props.auth.user.firstName.concat(props.auth.user.lastName),
+            name: props.auth.user.firstName.concat(" " + props.auth.user.lastName),
             comment: commentThing
         };
         console.log(props.auth.user.firstName.concat(props.auth.user.lastName));
@@ -98,6 +98,8 @@ const HomeScreen = (props) => {
         setSearchInput(event.target.value);
     };
 
+
+
     useEffect(() => {
         console.log(searchInput);
         //store.idNamePair = store.idNamePairs.filter(element => element.name.toLowerCase().includes(searchInput.toLowerCase()));
@@ -124,6 +126,12 @@ const HomeScreen = (props) => {
         document.getElementById("allButton").src = 'https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png';
         document.getElementById("userButton").src = 'https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png';
         //console.log(store);
+    }
+
+    function searchUser(event, name){
+        handleUser();
+        setSearchInput(name);
+        //store.searchIdNamePairsAuthor(name);
     }
     
     function handleAll(){   
@@ -268,7 +276,7 @@ const HomeScreen = (props) => {
                                     <Grid container spacing={1} direction="column">
                                         <Grid item xs={8}>
                                             
-                                            {currentComment.map(e => <div>{e.name} : {e.comment}</div>)}
+                                            {currentComment.map(e => <div><Button onClick={(event) => (searchUser(event, e.name))}>{e.name}</Button> : {e.comment}</div>)}
                                             
                                         </Grid>
                                         <Grid item xs ={4}>

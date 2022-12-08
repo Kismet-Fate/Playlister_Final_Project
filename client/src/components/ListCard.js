@@ -68,21 +68,25 @@ function ListCard(props) {
     
     function handleLoadList(event, id) {
         
-        console.log("handleLoadList for " + id);
-        if (!event.target.disabled) {
-            let _id = event.target.id;
-            if (_id.indexOf('list-card-text-') >= 0)
-                _id = ("" + _id).substring("list-card-text-".length);
+        if(!idNamePair.published){
+            console.log("handleLoadList for " + id);
+            if (!event.target.disabled) {
+                let _id = event.target.id;
+                if (_id.indexOf('list-card-text-') >= 0)
+                    _id = ("" + _id).substring("list-card-text-".length);
 
-            console.log("load " + event.target.id);
+                console.log("load " + event.target.id);
 
-            // CHANGE THE CURRENT LIST
-            //remember to change it from 2 to "" if you want to edit it
-            if(event.detail == 2)store.setCurrentList(id);
-            else store.setCurrentList2(id)
+                // CHANGE THE CURRENT LIST
+                //remember to change it from 2 to "" if you want to edit it
+                if(event.detail == 2)store.setCurrentList(id);
+                else store.setCurrentList2(id)
+            }
+            
+        } else{
+            handleListen(event, id);
+            store.setCurrentList2(id)
         }
-        handleListen(event, id);
-        
     }
 
     function handleToggleEdit(event) {
@@ -223,7 +227,7 @@ function ListCard(props) {
             <Box sx={{ p: 1, flexGrow: 0 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>listens </Box> <Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.listens}</Box> </Box>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleLike(event, idNamePair._id) }}>👍</Button>{idNamePair.likes}</Box><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleDislike(event, idNamePair._id) }}>👎</Button>{idNamePair.dislikes}</Box></Box>
-            {store.user === "HOME" && <Box sx={{ p: 1 }}>
+            {!idNamePair.published && store.user === "HOME" && <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{ fontSize: '48pt' }} />
                 </IconButton>
