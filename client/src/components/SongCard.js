@@ -41,9 +41,11 @@ function SongCard(props) {
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
         //event.preventDefault();
-        if (event.detail === 2) {
-            console.log("double clicked");
-            store.showEditSongModal(index, song);
+        if(store.user === "HOME"){
+            if (event.detail === 2) {
+                console.log("double clicked");
+                store.showEditSongModal(index, song);
+            }
         }
     }
 
@@ -68,12 +70,12 @@ function SongCard(props) {
                 href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
                 {song.title} by {song.artist}
             </a>
-            <Button
+            {store.user === "HOME" &&<Button
                 sx={{transform:"translate(-5%, -5%)", width:"5px", height:"30px"}}
                 variant="contained"
                 id={"remove-song-" + index}
                 className="list-card-button"
-                onClick={handleRemoveSong}>{"\u2715"}</Button>
+                onClick={handleRemoveSong}>{"\u2715"}</Button>}
         </div>
     );
 }
