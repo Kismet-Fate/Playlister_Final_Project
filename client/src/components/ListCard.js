@@ -236,7 +236,7 @@ function ListCard(props) {
                 </IconButton>
             </Box>}
             {!idNamePair.published && store.user === "HOME" &&<Button onClick={(event) => {handlePublish(event, idNamePair._id)}}>publish</Button>}
-            {<Button onClick={(event) => {handleDuplicate(event, idNamePair._id)}}>duplicate</Button>}
+            {!store.isGuest() && <Button onClick={(event) => {handleDuplicate(event, idNamePair._id)}}>duplicate</Button>}
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
                     handleExpand(event, idNamePair._id)

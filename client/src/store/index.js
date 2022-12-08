@@ -548,6 +548,10 @@ function GlobalStoreContextProvider(props) {
         }
         asyncLoadIdNamePairs();
     }
+    store.isGuest = function (){
+        if(auth.user.email === "Guest@gmail.com") return true;
+        else return false;
+    }
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
             //const response = await api.getPlaylistPairs();

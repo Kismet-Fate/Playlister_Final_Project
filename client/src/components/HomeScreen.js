@@ -93,7 +93,7 @@ const HomeScreen = (props) => {
         handleMenuClose();
     }
     
-
+    console.log(store.isGuest());
     const handleChange = (event) => {
         setSearchInput(event.target.value);
     };
@@ -205,7 +205,7 @@ const HomeScreen = (props) => {
 
                 }
                 
-                {store.user === "HOME" &&<Button sx={{ width: '100%', height: '5%' }} color="primary" variant="contained" aria-label="add"
+                {store.user === "HOME" && !store.isGuest() && <Button sx={{ width: '100%', height: '5%' }} color="primary" variant="contained" aria-label="add"
                     id="add-list-button"
                     onClick={handleCreateNewList}>
                     +
