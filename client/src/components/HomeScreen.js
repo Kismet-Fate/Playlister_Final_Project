@@ -27,12 +27,13 @@ const HomeScreen = (props) => {
     const [sortedBy, setsortedBy] = useState("");
 
     useEffect(() => {
-        store.loadIdNamePairs();
+        if(store.currentModal === "NONE")store.loadIdNamePairs();
     }, []);
     
     useEffect(() => {
+        if(store.currentModal === "NONE")
         store.loadIdNamePairs();
-        
+        console.log("problem");
     }, [store.user]);
     const [idNamePair2, setidNamePair2] = useState([]);
     //setidNamePair2(store.idNamePairs);
@@ -44,7 +45,7 @@ const HomeScreen = (props) => {
     }
     const[currentComment, setcurrentComment] = useState();
     useEffect(() => {
-        if(store.currentList != null){
+        if(store.currentList != null && store.currentModal === "NONE"){
             setcurrentComment(store.currentList.comments);
             //console.log(store.isMyList(store.currentList));
         }

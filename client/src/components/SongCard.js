@@ -36,12 +36,16 @@ function SongCard(props) {
     }
     function handleRemoveSong(event) {
         event.preventDefault();
-        store.showRemoveSongModal(index, song);
+        store.addRemoveSongTransaction(store, index, song);
+        console.log(index);
+        console.log(song);
+        //store.showRemoveSongModal(index, song);
+
     }
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
-        //event.preventDefault();
-        if(store.user === "HOME"){
+        event.preventDefault();
+        if(!store.currentList.published &&  store.user === "HOME"){
             if (event.detail === 2) {
                 console.log("double clicked");
                 store.showEditSongModal(index, song);
@@ -70,7 +74,7 @@ function SongCard(props) {
                 href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
                 {song.title} by {song.artist}
             </a>
-            {store.user === "HOME" &&<Button
+            {!store.currentList.published && store.user === "HOME" &&<Button
                 sx={{transform:"translate(-5%, -5%)", width:"5px", height:"30px"}}
                 variant="contained"
                 id={"remove-song-" + index}

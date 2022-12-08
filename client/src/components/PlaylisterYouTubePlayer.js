@@ -17,7 +17,7 @@ export default function YouTubePlayerExample({ store }) {
     const [songArtist, setsongArtist] = useState("");
     console.log(store);
     useEffect(() => {
-        if (store.currentList != null) {
+        if (store.currentList != null && store.currentModal === "NONE") {
             let playlist2 = [];
             store.currentList.songs.forEach(function (x) {
                 playlist2.push(x.youTubeId);

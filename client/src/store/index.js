@@ -555,7 +555,7 @@ function GlobalStoreContextProvider(props) {
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
             //const response = await api.getPlaylistPairs();
-
+            console.log("delete song problem");
             const response = await api.getPlaylists();
             //console.log(response);
             /*
@@ -806,10 +806,8 @@ function GlobalStoreContextProvider(props) {
         tps.addTransaction(transaction);
     }
     // THIS FUNCTION ADDS A RemoveSong_Transaction TO THE TRANSACTION STACK
-    store.addRemoveSongTransaction = () => {
-        let index = store.currentSongIndex;
-        let song = store.currentList.songs[index];
-        let transaction = new RemoveSong_Transaction(store, index, song);
+    store.addRemoveSongTransaction = (s, index, song) => {
+        let transaction = new RemoveSong_Transaction(s, index, song);
         tps.addTransaction(transaction);
     }
     store.addUpdateSongTransaction = function (index, newSongData) {

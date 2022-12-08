@@ -68,7 +68,7 @@ function ListCard(props) {
     
     function handleLoadList(event, id) {
         
-        if(!idNamePair.published){
+        if(!idNamePair.published && store.currentModal === "NONE"){
             console.log("handleLoadList for " + id);
             if (!event.target.disabled) {
                 let _id = event.target.id;
@@ -79,13 +79,15 @@ function ListCard(props) {
 
                 // CHANGE THE CURRENT LIST
                 //remember to change it from 2 to "" if you want to edit it
-                if(event.detail == 2)store.setCurrentList(id);
+                if(event.detail == 2) store.setCurrentList(id);//store.setCurrentList(id);
                 else store.setCurrentList2(id)
             }
             
         } else{
-            handleListen(event, id);
-            store.setCurrentList2(id)
+            if(store.currentModal === "NONE"){
+                handleListen(event, id);
+                store.setCurrentList2(id)
+            }
         }
     }
 
@@ -110,6 +112,7 @@ function ListCard(props) {
     }
 
     function handleKeyPress(event) {
+        event.stopPropagation();
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
             store.changeListName(id, text);
