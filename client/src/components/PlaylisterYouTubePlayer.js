@@ -24,9 +24,11 @@ export default function YouTubePlayerExample({ store }) {
             });
             setplaylist(playlist2);
             console.log(store.currentList);
-            setsongNum(1);
-            setsongTitle(store.currentList.songs[songNum].title);
-            setsongArtist(store.currentList.songs[songNum].artist);
+            if(store.currentList.songs.length !=0){
+                setsongNum(1);
+                setsongTitle(store.currentList.songs[0].title);
+                setsongArtist(store.currentList.songs[0].artist);
+            }
         }
     }, [store.currentList]);
 

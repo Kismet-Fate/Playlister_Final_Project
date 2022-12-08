@@ -81,6 +81,7 @@ function ListCard(props) {
             if(event.detail == 2)store.setCurrentList(id);
             else store.setCurrentList2(id)
         }
+        handleListen(event, id);
         
     }
 
@@ -136,7 +137,10 @@ function ListCard(props) {
 
     function handleLike(event, id) {
         //console.log(store.currentSong);
-
+        if(disliked){
+            idNamePair.dislikes--;
+            setdisLiked(!disliked);
+        }
         event.stopPropagation();
         if (!liked) {
             idNamePair.likes++;
@@ -152,7 +156,10 @@ function ListCard(props) {
     }
     function handleDislike(event, id) {
         event.stopPropagation();
-
+        if(liked){
+            idNamePair.likes--;
+            setLiked(!liked);
+        }
         if (!disliked) {
             idNamePair.dislikes++;
             setdisLiked(!disliked);
@@ -171,7 +178,21 @@ function ListCard(props) {
         store.updateListLikes(id, idNamePair);
         //store.hideModals();
     }
+    function handlePublish(event, id){
+        event.stopPropagation();
+        console.log(idNamePair);
+        idNamePair.published = true;
+        store.updateListLikes(id, idNamePair);
+        store.hideModals();
+    }
 
+    function handleDuplicate(event, id){
+        event.stopPropagation();
+        console.log(idNamePair);
+        store.duplicateList(idNamePair);
+        store.hideModals();
+        store.changeUserStateHome();
+    }
 
     let selectClass = "unselected-list-card";
     if (selected) {
@@ -202,18 +223,20 @@ function ListCard(props) {
             <Box sx={{ p: 1, flexGrow: 0 }}>by {idNamePair.firstname + " " + idNamePair.lastname}</Box> </Box>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}>listens </Box> <Box sx={{ p: 1, flexGrow: 0 }}>{idNamePair.listens}</Box> </Box>
             <Box sx={{ p: 1, flexGrow: 0 }}><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleLike(event, idNamePair._id) }}>👍</Button>{idNamePair.likes}</Box><Box sx={{ p: 1, flexGrow: 0 }}><Button onClick={(event) => { handleDislike(event, idNamePair._id) }}>👎</Button>{idNamePair.dislikes}</Box></Box>
-            <Box sx={{ p: 1 }}>
+            {store.user === "HOME" && <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{ fontSize: '48pt' }} />
                 </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
+            </Box>}
+            {store.user === "HOME" && <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
                     handleDeleteList(event, idNamePair._id)
                 }} aria-label='delete'>
                     <DeleteIcon style={{ fontSize: '48pt' }} />
                 </IconButton>
-            </Box>
+            </Box>}
+            {!idNamePair.published && store.user === "HOME" &&<Button onClick={(event) => {handlePublish(event, idNamePair._id)}}>publish</Button>}
+            {<Button onClick={(event) => {handleDuplicate(event, idNamePair._id)}}>duplicate</Button>}
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
                     handleExpand(event, idNamePair._id)

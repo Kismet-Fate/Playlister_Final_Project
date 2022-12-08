@@ -23,11 +23,13 @@ const HomeScreen = (props) => {
     const { store } = useContext(GlobalStoreContext);
     const [vidPlayer, setVidPlayer] = useState(true);
     const {auth} = props.auth;
-    /*
+    
+    const [sortedBy, setsortedBy] = useState("");
+
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
-    */
+    
     useEffect(() => {
         store.loadIdNamePairs();
         
@@ -65,6 +67,31 @@ const HomeScreen = (props) => {
         
     }
 
+    const handleSortedByName = () =>{
+        setsortedBy("NAME");
+        store.loadIdNamePairsSorted("NAME");
+        handleMenuClose();
+    }
+    const handleSortedByDate = () =>{
+        setsortedBy("DATE");
+        store.loadIdNamePairsSorted("DATE");
+        handleMenuClose();
+    }
+    const handleSortedByListens = () =>{
+        setsortedBy("LISTENS");
+        store.loadIdNamePairsSorted("LISTENS");
+        handleMenuClose();
+    }
+    const handleSortedByLikes = () =>{
+        setsortedBy("LIKES");
+        store.loadIdNamePairsSorted("LIKES");
+        handleMenuClose();
+    }
+    const handleSortedByDislikes = () =>{
+        setsortedBy("DISLIKES");
+        store.loadIdNamePairsSorted("DISLIKES");
+        handleMenuClose();
+    }
     
 
     const handleChange = (event) => {
@@ -98,6 +125,7 @@ const HomeScreen = (props) => {
         document.getElementById("userButton").src = 'https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png';
         //console.log(store);
     }
+    
     function handleAll(){   
         store.changeUserStateAll();
         document.getElementById("homeButton").src = 'https://i.gyazo.com/925c86fb69ce0341fe569c6beff25caf.png';
@@ -125,7 +153,7 @@ const HomeScreen = (props) => {
         setVidPlayer(false);
     }
 
-    /*
+    
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
@@ -144,7 +172,6 @@ const HomeScreen = (props) => {
                 vertical: 'top',
                 horizontal: 'right',
             }}
-            id={menuId}
             keepMounted
             transformOrigin={{
                 vertical: 'top',
@@ -153,13 +180,15 @@ const HomeScreen = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
-            <MenuItem onClick={handleGuest}><Link to='/'>Login As Guest</Link></MenuItem>
+            <MenuItem onClick={handleSortedByName}>Name (A-Z)</MenuItem>
+            <MenuItem onClick={handleSortedByDate}>Publish Date (Newest)</MenuItem>
+            <MenuItem onClick={handleSortedByListens}>Listens (High - Low)</MenuItem>
+            <MenuItem onClick={handleSortedByLikes}>Likes (High - Low)</MenuItem>
+            <MenuItem onClick={handleSortedByDislikes}>Dislikes (High - Low)</MenuItem>
         </Menu>);
     
 
-    */
+    
     let listCard = "";
     if (store) {
         listCard =
@@ -193,9 +222,9 @@ const HomeScreen = (props) => {
                     <img id = "allButton" src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
                     <img id = "userButton" src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
                     <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
-                    <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
+                    <img onClick = {handleProfileMenuOpen} style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
                     <p style={{display:"inline", float: "right"}}>Sorted by</p>
-                    
+                    {sortedByMenu}
                     
                     
                 </div>
@@ -267,8 +296,9 @@ const HomeScreen = (props) => {
                     <img id = "allButton" src="https://i.gyazo.com/86621b0d0f86837ac3119a826eda3a77.png" onClick={(e)=>handleAll(e)}></img>
                     <img id = "userButton" src="https://i.gyazo.com/17ce1729cad3905d213a06ee107a6e90.png" onClick={(e)=>handleUser(e)}></img>
                     <input style={{display: "inline-block", marginLeft:"250px", width:"500px"}} type="text" placeholder="Search here" onChange={handleChange} value={searchInput} />
-                    <img style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
+                    <img onClick = {handleProfileMenuOpen} style={{float: "right"}} src="https://i.gyazo.com/5a08a4d8c4b67862f1784b3cb14a5863.png"></img>
                     <p style={{display:"inline", float: "right"}}>Sorted by</p>
+                    {sortedByMenu}
                     
                     
                     
