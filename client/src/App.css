@@ -25,6 +25,7 @@
 }
 .rightPanel {
   display:grid;
+  
   /*
   justify-content: center;
 
@@ -34,8 +35,9 @@
   grid-row: 1;
 }
 .leftPanel {
+  max-height: 598px;
   min-width: 0;
-  overflow: hidden;
+  overflow: scroll;
   width:100%;
   grid-column: 1;
   grid-row: 1;
